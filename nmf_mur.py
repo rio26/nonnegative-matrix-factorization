@@ -29,7 +29,7 @@ def mu_solve(self, tol = None, timelimit = None, max_iter = None, r = None):
     else:
         self.max_iter = max_iter
 
-    n_iter = 0
+    # n_iter = 0
     for n_iter in range(self.max_iter):
         self.h = np.multiply(self.h, (np.dot(self.w.T, self.v) /  (np.dot(np.dot(self.w.T, self.w), self.h) + 2 ** -8)))
         # denominator = np.dot(np.dot(self.w.T, self.w), self.h) + 2 ** -8

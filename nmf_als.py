@@ -42,4 +42,3 @@ def als_solve(self, tol = None, timelimit = None, maxiter = None, r = None):
     grad_h = np.matmul(np.matmul(self.w.T, self.w), self.h) - np.matmul(self.w.T, self.v)
 
 #       for i in range(self.maxiter):
-

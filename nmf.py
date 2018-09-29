@@ -41,9 +41,9 @@ class NMF:
             self.h = np.matrix(h_init)
 
     def frobenius_norm(self):
-        """ Euclidean error between V and W*H """
+        """ Euclidean error between v and w*h """
 
-        if hasattr(self, 'H') and hasattr(self, 'W'):
+        if hasattr(self, 'h') and hasattr(self, 'w'):  # if it has attributes w and h
             error = LA.norm(self.v - np.dot(self.w, self.h))
         else:
             error = None
@@ -52,12 +52,10 @@ class NMF:
     def kl_divergence(self):
         """ KL Divergence between X and W*H """
 
-        if hasattr(self, 'H') and hasattr(self, 'W'):
-            wh = np.dot(self.w, self.h)
-            error = entropy(self.v, wh).sum()
+        if hasattr(self, 'h') and hasattr(self, 'w'):
+            error = entropy(self.v, np.dot(self.w, self.h)).sum()
         else:
             error = None
-
         return error
 
 #test_mat = np.matrix([[1, 1, 1], [1, 1, 1], [1, 1, 1]])
