@@ -2,7 +2,7 @@ import numpy.linalg as LA
 import numpy as np
 #from scipy.stats import entropy
 from nmf_mur import*
-from nmf_als import*
+#from nmf_als import*
 from time import time
 
 # magic numbers
