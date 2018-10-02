@@ -1,8 +1,7 @@
 import numpy as np
-from time import time
 _smallnumber = 1E-5
 
-def mu_solve(self, tol = None, timelimit = None, max_iter = None, r = None):
+def mur_solve(self, tol = None, timelimit = None, max_iter = None, r = None):
     """
     Input:
       -- V: m x n matrix, the dataset

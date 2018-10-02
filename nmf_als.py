@@ -1,5 +1,5 @@
 import numpy as np
-from time import time
+import numpy.linalg.solve
 
 # magic numbers
 _smallnumber = 1E-5
@@ -37,8 +37,37 @@ def als_solve(self, tol = None, timelimit = None, maxiter = None, r = None):
     else:
         self.r = r
 
-    # gradient of w and h repectively
-    grad_w = np.matmul(self.w, np.matmul(self.h, self.h.T)) - np.matmul(self.v, self.h.T)
-    grad_h = np.matmul(np.matmul(self.w.T, self.w), self.h) - np.matmul(self.w.T, self.v)
 
-#       for i in range(self.maxiter):
+    def update_h(self):
+
+        lhs = np.float64(np.dot(self.w.T, self.w))  # lhs - left hand side, Float64
+        rhs = np.float64(np.dot(self.w.T))
+
+        self.h = np.linalg.solve(lhs, rhs)
+
+
+
+        Q = matrix(WtW)
+        G = matrix(-np.eye(self._rank))
+        h = matrix(0.0, (self._rank, 1))
+        samples = self.X.T
+        cvxopt.solvers.options['show_progress'] = False
+        for i in range(self._samples):
+            p = matrix(np.float64(np.dot(-self.W.T, samples[i])))
+
+            sol = solvers.qp(Q, p, G, h)
+            self.H[:, i] = np.array(sol['x']).reshape((1, -1))
+
+    def update_w(self):
+
+        HHt = np.float64(np.dot(self.h, self.h.T))  # Float64 for cvxopt
+        Q = matrix(HHt)
+        G = matrix(-np.eye(self._rank))
+        h = matrix(0.0, (self._rank, 1))
+        samples = self.X
+        cvxopt.solvers.options['show_progress'] = False
+        for i in range(self._samples):
+            p = matrix(np.float64(np.dot(-self.H, samples[i].T)))
+
+            sol = solvers.qp(Q, p, G, h)
+            self.W[i, :] = np.array(sol['x']).reshape((1, -1))
