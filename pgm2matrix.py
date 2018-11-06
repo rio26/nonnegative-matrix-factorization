@@ -11,7 +11,7 @@ import os
 import matplotlib.pyplot as plt
 import pylab
 
-from skimage import io
+from skimage.io import imsave
 from skimage import io, transform
 
 
@@ -55,12 +55,16 @@ def pgm2matrix(filename, numberofimages):
 def matrix2png(matrix, row, col, file_store_path = None):
     [m0,m1] = np.shape(matrix)
     print('row: ', m0, '; col:', m1)
-    for col_num in range(1):
+    for col_num in range(m1):
         tmp = matrix[:,col_num]
         # print('tmp:' , np.shape(tmp), tmp) # tmp: (10304, 1)
         new_image = tmp.T.reshape((row, col))
-        print(np.shape(new_image))
-        return new_image
+        plt.imshow(new_image, cmap="gray")
+        pylab.show()
+        imsave(os.path.join('results/0611/' + str(col_num+1) + '.png'), new_image)
+        input()
+        # print(np.shape(new_image))
+        # return new_image
         
 
 if __name__ == "__main__":
@@ -70,7 +74,3 @@ if __name__ == "__main__":
     # plt.show()
     matrix = pgm2matrix('orl_face/s1/', 10)
     image_t = matrix2png(matrix, 112, 92)
-    print(type(image_t))
-    imgplog = plt.imshow(image_t, cmap="gray")
-    pylab.show()
-    input()
