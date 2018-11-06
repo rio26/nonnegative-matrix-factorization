@@ -2,6 +2,7 @@ import numpy.linalg as LA
 import numpy as np
 #from scipy.stats import entropy
 from nmf_mur import*
+from pgm2matrix import*
 #from nmf_als import*
 from time import time
 
@@ -61,8 +62,10 @@ class NMF:
     #         error = None
     #     return error
 
-test_mat = np.matrix([[100, 1, 234 , 98 ,359], [78, 12, 727, 812, 234], [123 , 235 ,6572, 223, 845], [356, 2342, 123, 5634, 234], [235,567, 123, 4365, 243]])
-test_nmf = NMF(test_mat, r=3)
+# test_mat = np.matrix([[100, 1, 234 , 98 ,359], [78, 12, 727, 812, 234], [123 , 235 ,6572, 223, 845], [356, 2342, 123, 5634, 234], [235,567, 123, 4365, 243]])
+
+
+test_nmf = NMF(test_mat, r=2)
 print('Starting error is: ', test_nmf.frobenius_norm())
 t0 = time()
 mur_solve(test_nmf)
