@@ -39,8 +39,8 @@ def pgm2vector(filename):
     """Converting an image to a row vector"""
     image = io.imread(filename)
     # [row,col] = np.shape(image) # 112 * 92
-    vec = np.concatenate(image.T) # (1 * 10304)
-    # print(np.shape(vec))
+    vec = np.concatenate(image) # (1 * 10304)
+    # print('pgm to vector size: ',np.shape(vec))
     return vec
 
 def pgm2matrix(filename, numberofimages):
