@@ -123,16 +123,16 @@ print('Final error is: ', test_nmf.frobenius_norm(), 'Time taken: ', t1 - t0)
 '''
 #-------------------------------------------------------------------#
 
-orl_face = pgm2matrix('orl_face/s28/', 10)
+orl_face = pgm2matrix('orl_face/s27/', 10)
 face_nmf = NMF(orl_face, r=2)
 print('Initial error is: ', face_nmf.frobenius_norm())
 
 t0 = time()
-result = face_nmf.mur_solve(max_iter=1000)
+result = face_nmf.mur_solve(max_iter=2000)
 t1 = time()
 
 print('Final error is: ', face_nmf.frobenius_norm(), 'Time taken: ', t1 - t0)
-print(result)
+# print(result)
 matrix2png(result, 112, 92, 'results/0612/')
 # print('Final error is: ', face_nmf_mur.frobenius_norm(), 'Time taken: ', t1 - t0)
 # print('target matrix V: \n', orl_face)

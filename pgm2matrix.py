@@ -62,10 +62,9 @@ def matrix2png(matrix, row, col, file_store_path):
         plt.imshow(new_image, cmap="gray")
         pylab.show()
         new_image_new = (new_image - np.min(new_image)) / (np.max(new_image) - np.min(new_image))
-
         imsave(os.path.join(file_store_path + str(col_num+1) + '.png'), new_image_new)
         # input()
-        print(np.shape(new_image))
+        # print(np.shape(new_image))
         # return new_image
         
 
