@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 import pylab
 
 from skimage.io import imsave
-from skimage import io, transform
+from skimage import io, transform, img_as_float
 
 
 def read_pgm(filename, byteorder='>'):
@@ -52,7 +52,7 @@ def pgm2matrix(filename, numberofimages):
     # print(np.shape(mat.T))
     return(mat.T) # return (10 * 10304)
 
-def matrix2png(matrix, row, col, file_store_path = None):
+def matrix2png(matrix, row, col, file_store_path):
     [m0,m1] = np.shape(matrix)
     print('row: ', m0, '; col:', m1)
     for col_num in range(m1):
@@ -61,9 +61,9 @@ def matrix2png(matrix, row, col, file_store_path = None):
         new_image = tmp.T.reshape((row, col))
         plt.imshow(new_image, cmap="gray")
         pylab.show()
-        imsave(os.path.join('results/0611/' + str(col_num+1) + '.png'), new_image)
+        imsave(os.path.join(file_store_path + str(col_num+1) + '.png'), new_image)
         input()
-        # print(np.shape(new_image))
+        print(np.shape(new_image))
         # return new_image
         
 
@@ -73,4 +73,4 @@ if __name__ == "__main__":
     # plt.imshow(image, pyplot.cm.gray)
     # plt.show()
     matrix = pgm2matrix('orl_face/s1/', 10)
-    image_t = matrix2png(matrix, 112, 92)
+    image_t = matrix2png(matrix, 112, 92, 'results/0612/')
