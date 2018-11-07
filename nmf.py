@@ -99,8 +99,8 @@ class NMF:
             # denominator = np.dot(self.w, np.dot(self.h, self.h.T)) + 2**-8
 
         # print('w', np.shape(self.w), 'h', np.shape(self.h)) # w (10304, 2) h (2, 10)
-        return np.dot(self.w, self.h)
-
+        # return np.dot(self.w, self.h)
+        return self.w
 #-------------------------------------------------------------------#
 '''
 test_mat = np.matrix(
@@ -123,7 +123,7 @@ print('Final error is: ', test_nmf.frobenius_norm(), 'Time taken: ', t1 - t0)
 '''
 #-------------------------------------------------------------------#
 
-orl_face = pgm2matrix('orl_face/s1/', 10)
+orl_face = pgm2matrix('orl_face/s28/', 10)
 face_nmf = NMF(orl_face, r=2)
 print('Initial error is: ', face_nmf.frobenius_norm())
 
