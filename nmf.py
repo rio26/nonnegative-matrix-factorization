@@ -1,5 +1,7 @@
 import numpy.linalg as LA
 import numpy as np
+import scipy.io as sio # not working for me
+# import h5py 
 #from scipy.stats import entropy
 # from nmf_mur import*
 from pgm2matrix import*
@@ -62,7 +64,8 @@ class NMF:
             error = None
         return error
 
-# Multiplicative Update Rule
+
+#---------------------------Multiplicative Update Rule-----------------------------------#
     def mur_solve(self, tol = None, timelimit = None, max_iter = None, r = None):
         """
         Input:
@@ -102,6 +105,12 @@ class NMF:
         # return np.dot(self.w, self.h)
         return self.w
 #-------------------------------------------------------------------#
+
+#---------------------------Truncated Cauchy-----------------------------------#
+
+
+#-------------------------------------------------------------------#
+
 '''
 test_mat = np.matrix(
 [[100, 1, 234 , 98 ,359],
@@ -122,22 +131,44 @@ t1 = time()
 print('Final error is: ', test_nmf.frobenius_norm(), 'Time taken: ', t1 - t0)
 '''
 #-------------------------------------------------------------------#
+if __name__ == "__main__":
+    # orl_face = pgm2matrix('orl_face/s2class/', 20)
+    # face_nmf = NMF(orl_face, r=20)
+    # print('Initial error is: ', face_nmf.frobenius_norm())
 
-orl_face = pgm2matrix('orl_face/s27/', 10)
-face_nmf = NMF(orl_face, r=2)
-print('Initial error is: ', face_nmf.frobenius_norm())
+    # t0 = time()
+    # result = face_nmf.mur_solve(max_iter=2000)
+    # t1 = time()
 
-t0 = time()
-result = face_nmf.mur_solve(max_iter=2000)
-t1 = time()
+    # print('Final error is: ', face_nmf.frobenius_norm(), 'Time taken: ', t1 - t0)
+    # # print(result)
+    # matrix2png(result, 112, 92, 'results/1116/')
+    # print('Final error is: ', face_nmf_mur.frobenius_norm(), 'Time taken: ', t1 - t0)
+    # print('target matrix V: \n', orl_face)
+    # print('basis matrix W^T: \n', face_nmf_mur.w.T)
+    # print('weight matrix h: \n', face_nmf_mur.h)
+    # print('---------------------------------------- MUR ----------------------------------------')
 
-print('Final error is: ', face_nmf.frobenius_norm(), 'Time taken: ', t1 - t0)
-# print(result)
-matrix2png(result, 112, 92, 'results/0612/')
-# print('Final error is: ', face_nmf_mur.frobenius_norm(), 'Time taken: ', t1 - t0)
-# print('target matrix V: \n', orl_face)
-# print('basis matrix W^T: \n', face_nmf_mur.w.T)
-# print('weight matrix h: \n', face_nmf_mur.h)
-# print('---------------------------------------- MUR ----------------------------------------')
+    # matrix2png(result, 112, 92, 'results/0611/')
+    
 
-# matrix2png(result, 112, 92, 'results/0611/')
+#-----------------------YALE B--------------------------------------------#
+
+
+
+    # f = h5py.File('YaleB.mat','r') 
+    # data = f.get('data/variable1') 
+    # data = np.array(data)
+    mat = sio.loadmat('YaleB.mat')
+    # print(np.shape(mat['fea'])) #(1024, 2414)
+    mat_fea = mat['fea']
+    fea_nmf = NMF(mat_fea, r=10)
+
+    t0 = time()
+    result = fea_nmf.mur_solve(max_iter=1000)
+    t1 = time()
+
+
+    print('Final error is: ', fea_nmf.frobenius_norm(), 'Time taken: ', t1 - t0)
+    print(np.shape(result))
+    matrix2png(result, 32, 32, 'results/1116/yale_b/')
